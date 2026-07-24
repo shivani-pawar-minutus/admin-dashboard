@@ -14,15 +14,26 @@ export interface SignupPayload {
 }
 
 export const login = async (data: LoginPayload) => {
-  const response = await api.post("/auth/login", data);
+  const response = await api.get(`/admins`, {
+    params: {
+      email: data.email,
+    },
+  });
 
-  return response.data;
+  console.log("Login response:", response.data);
+
+  return response;
 };
 
 
 export const signup = async (data: SignupPayload) => {
-  const response = await api.post("/auth/signup", data);
+  const response = await api.post("/admins", data);
 
+  console.log("Signup response:", response.data);
   return response.data;
 };
 
+export const getAllAdmins = async () => {
+  const response = await api.get("/admins");
+  return response.data;
+}
