@@ -1,0 +1,118 @@
+{
+  "admins": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "2",
+      "name": "John",
+      "email": "john@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "Gql3lxKbk8Q",
+      "name": "Shivani Pawar",
+      "email": "shivani123@gmail.com",
+      "password": "Shivani@123"
+    },
+    {
+      "id": "T7EPc4NZc3k",
+      "name": "Pranalee Nanavare",
+      "email": "pranalee123@gmail.com",
+      "password": "Pranalee@123"
+    },
+    {
+      "id": "QIgENrVo9Lk",
+      "name": "Riya",
+      "email": "riya123@gmail.com",
+      "password": "Riya@123"
+    },
+    {
+      "name": "Neha Shinde",
+      "email": "neha@gmail.com",
+      "password": "Neha@123",
+      "id": "RXuKBd9-QIc"
+    },
+    {
+      "name": "Raj",
+      "email": "raj@gmail.com",
+      "password": "Raj@123",
+      "id": "XGeUlqzCvEc"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "User 1",
+      "email": "user1@gmail.com",
+      "role": "Admin",
+      "status": "Active"
+    },
+    {
+      "id": "5PgjMSJiba4",
+      "name": "Ridhi",
+      "email": "ridhi@gmail.com",
+      "role": "User",
+      "status": "Active",
+      "createdBy": "RXuKBd9-QIc",
+      "createdByName": "Neha Shinde",
+      "createdAt": "2026-07-23T06:38:26.743Z"
+    },
+    {
+      "id": "N62RpKiHeB8",
+      "name": "Ram ",
+      "email": "ram@gmail.com",
+      "role": "User",
+      "status": "Inactive",
+      "createdBy": "RXuKBd9-QIc",
+      "createdByName": "Neha Shinde",
+      "createdAt": "2026-07-23T06:38:57.721Z"
+    },
+    {
+      "id": "VW43zcdcW_s",
+      "name": "Pranoti",
+      "email": "pranoti@gmail.com",
+      "role": "User",
+      "status": "Inactive",
+      "createdBy": "T7EPc4NZc3k",
+      "createdByName": "Pranalee Nanavare",
+      "createdAt": "2026-07-23T06:41:07.898Z"
+    },
+    {
+      "id": "Cgkkhn69-zA",
+      "name": "Shiv ",
+      "email": "shiv@gmail.com",
+      "role": "User",
+      "status": "Active",
+      "createdBy": "T7EPc4NZc3k",
+      "createdByName": "Pranalee Nanavare",
+      "createdAt": "2026-07-23T06:41:47.355Z"
+    },
+    {
+      "id": "f4pLPMN17ew",
+      "name": "abc",
+      "email": "abc@gmail.com",
+      "role": "User",
+      "status": "Active",
+      "createdBy": "XGeUlqzCvEc",
+      "createdByName": "Raj",
+      "createdAt": "2026-07-23T09:15:40.120Z",
+      "updatedAt": "2026-07-23T10:09:49.301Z"
+    },
+    {
+      "id": "fn9MPSum1eg",
+      "name": "riya",
+      "email": "riya@gmail.com",
+      "role": "User",
+      "status": "Active",
+      "createdBy": "XGeUlqzCvEc",
+      "createdByName": "Raj",
+      "createdAt": "2026-07-23T12:20:17.309Z",
+      "updatedAt": ""
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

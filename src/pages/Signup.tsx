@@ -13,17 +13,16 @@ import {
   Typography,
 } from "@mui/material";
 
-import {
-  LockOutlined,
-  Visibility,
-  VisibilityOff,
-} from "@mui/icons-material";
+import { LockOutlined, Visibility, VisibilityOff } from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../hooks/useAppDispatch";
+import { signupThunk } from "../featuers/auth/authThunks";
 
 export default function Signup() {
-  const { signup } = useAuth();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [name, setName] = useState("");
 
@@ -31,21 +30,18 @@ export default function Signup() {
 
   const [password, setPassword] = useState("");
 
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setError("");
 
-    if (!name || !email || !password) {
+    if (!name.trim() || !email.trim() || !password.trim()) {
       setError("All fields are required.");
       return;
     }
@@ -53,22 +49,32 @@ export default function Signup() {
     try {
       setLoading(true);
 
-      await signup({
-        name,
-        email,
-        password,
-      });
-    } catch (err: unknown) {
-      const error = err as { response?: { data?: { message?: string } } };
-      setError(
-        error?.response?.data?.message ??
-          "Signup failed."
+      const resultAction = await dispatch(
+        signupThunk({
+          name,
+          email,
+          password,
+        }),
       );
+
+      console.log("Signup result:", resultAction);
+
+      if (signupThunk.fulfilled.match(resultAction)) {
+        navigate("/login");
+      } else {
+        console.error("Signup failed:", resultAction.error.message);
+        setError("Signup failed.");
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("User already exists.");
+      }
     } finally {
       setLoading(false);
     }
   };
-
   return (
     <Container
       maxWidth="sm"
@@ -102,42 +108,27 @@ export default function Signup() {
             <LockOutlined />
           </Avatar>
 
-          <Typography
-            variant="h4"
-            gutterBottom
-          >
+          <Typography variant="h4" gutterBottom>
             Create Account
           </Typography>
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mb: 3 }}
-          >
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
             Register as Admin
           </Typography>
 
           {error && (
             <Box sx={{ mb: 2 }}>
-              <Typography color="error">
-                {error}
-              </Typography>
+              <Typography color="error">{error}</Typography>
             </Box>
           )}
 
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{ width: "100%" }}
-          >
+          <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
             <TextField
               fullWidth
               margin="normal"
               label="Full Name"
               value={name}
-              onChange={(e) =>
-                setName(e.target.value)
-              }
+              onChange={(e) => setName(e.target.value)}
             />
 
             <TextField
@@ -145,9 +136,7 @@ export default function Signup() {
               margin="normal"
               label="Email"
               value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
+              onChange={(e) => setEmail(e.target.value)}
             />
 
             <TextField
@@ -155,29 +144,17 @@ export default function Signup() {
               margin="normal"
               label="Password"
               variant="outlined"
-              type={
-                showPassword ? "text" : "password"
-              }
+              type={showPassword ? "text" : "password"}
               value={password}
-              onChange={(e) =>
-                setPassword(e.target.value)
-              }
+              onChange={(e) => setPassword(e.target.value)}
               slotProps={{
                 input: {
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
-                        onClick={() =>
-                          setShowPassword(
-                            !showPassword
-                          )
-                        }
+                        onClick={() => setShowPassword(!showPassword)}
                       >
-                        {showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -196,18 +173,14 @@ export default function Signup() {
               disabled={loading}
             >
               {loading ? (
-                <CircularProgress
-                  size={24}
-                  color="inherit"
-                />
+                <CircularProgress size={24} color="inherit" />
               ) : (
                 "Create Account"
               )}
             </Button>
 
             <Typography sx={{ mt: 3, textAlign: "center" }}>
-              Already have an account?{" "}
-              <Link to="/login">Login</Link>
+              Already have an account? <Link to="/login">Login</Link>
             </Typography>
           </Box>
         </Box>

@@ -1,14 +1,16 @@
 // src/features/auth/authTypes.ts
 
-export interface User {
-  id: string;
+export interface Admin {
+  id: number;
   name: string;
   email: string;
+  password: string;
 }
 
 export interface AuthState {
-  user: User | null;
+  user: Admin | null;
   token: string | null;
   isAuthenticated: boolean;
   loading: boolean;
+  error: string | null;
 }

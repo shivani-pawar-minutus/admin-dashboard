@@ -1,0 +1,35 @@
+{
+  "admins": [
+    {
+      "id": "1",
+      "name": "Admin",
+      "email": "admin@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "2",
+      "name": "John",
+      "email": "john@gmail.com",
+      "password": "123456"
+    },
+    {
+      "name": "Shivani Pawar",
+      "email": "shivani123@gmail.com",
+      "password": "Shivani@123",
+      "id": "Gql3lxKbk8Q"
+    },
+    {
+      "name": "Pranalee Nanavare",
+      "email": "pranalee123@gmail.com",
+      "password": "Pranalee@123",
+      "id": "T7EPc4NZc3k"
+    },
+    {
+      "name": "Riya ",
+      "email": "riya123@gmail.com",
+      "password": "Riya@123",
+      "id": "QIgENrVo9Lk"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

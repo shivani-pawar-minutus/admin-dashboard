@@ -20,10 +20,13 @@ import {
 } from "@mui/icons-material";
 
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
+import { loginThunk } from "../featuers/auth/authThunks";
+import { useAppDispatch } from "../hooks/useAppDispatch";
 
 export default function Login() {
-  const { login } = useAuth();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -34,35 +37,46 @@ export default function Login() {
 
   const [error, setError] = useState("");
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
+const handleSubmit = async (
+  event: React.FormEvent<HTMLFormElement>
+) => {
+  event.preventDefault();
 
-    setError("");
+  setError("");
 
-    if (!email.trim() || !password.trim()) {
-      setError("Email and Password are required.");
-      return;
-    }
+  if (!email.trim() || !password.trim()) {
+    setError("Email and Password are required.");
+    return;
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      await login({
+    const resultAction = await dispatch(
+      loginThunk({
         email,
         password,
-      });
-    } catch (err: unknown) {
-      const error = err as { response?: { data?: { message?: string } } };
+      })
+    );
+
+    if (loginThunk.fulfilled.match(resultAction)) {
+      navigate("/dashboard");
+    } else {
       setError(
-        error?.response?.data?.message ||
+        resultAction.error.message ??
           "Invalid email or password."
       );
-    } finally {
-      setLoading(false);
     }
-  };
+  } catch (err) {
+    if (err instanceof Error) {
+      setError(err.message);
+    } else {
+      setError("Login failed.");
+    }
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <Container
